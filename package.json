@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "lint": "npx eslint . --fix"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "lint": "npx eslint . --fix",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,8 @@
     "eslint": "^8.41.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "nodemon": "^2.0.22"
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3"
   }
 }

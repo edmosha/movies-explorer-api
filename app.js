@@ -1,16 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose').default;
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const index = require('./routes/index');
+const { MONGO_URL } = require('./utils/constants');
 
 const app = express();
-const { PORT = 3000 } = process.env;
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
 });
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
 app.use('/', index);
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+module.exports = app;
