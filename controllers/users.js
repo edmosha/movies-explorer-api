@@ -61,3 +61,11 @@ module.exports.signup = (req, res, next) => {
       return next(err);
     });
 };
+
+module.exports.signout = (req, res) => res
+  .cookie('jwt', 'logout', {
+    maxAge: 0,
+    httpOnly: true,
+    sameSite: true,
+  })
+  .send({ message: 'Пользователь успешно деавторизирован' });
