@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const ConflictError = require('../errors/ConflictError');
+const DocumentNotFoundError = require('../errors/DocumentNotFoundError');
 const { JWT_DEV } = require('../utils/constants');
 
 module.exports.getAboutMe = (req, res, next) => {
@@ -18,6 +19,7 @@ module.exports.updateAboutMe = (req, res, next) => {
     { email, name },
     { new: true, runValidators: true },
   )
+    .orFail(new DocumentNotFoundError('Запрашиваемый пользователь не найден'))
     .then((user) => res.send(user))
     .catch(next);
 };
