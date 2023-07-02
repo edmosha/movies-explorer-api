@@ -11,7 +11,9 @@ const { MONGO_URL } = require('./utils/constants');
 
 const app = express();
 
-mongoose.connect(MONGO_URL, {
+const { NODE_ENV, MONGO_URL_PROD } = process.env;
+
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL_PROD : MONGO_URL, {
   useNewUrlParser: true,
 });
 

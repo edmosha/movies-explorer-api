@@ -21,7 +21,12 @@ module.exports.updateAboutMe = (req, res, next) => {
   )
     .orFail(new DocumentNotFoundError('Запрашиваемый пользователь не найден'))
     .then((user) => res.send(user))
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
+      }
+      return next(err);
+    });
 };
 
 module.exports.signin = (req, res, next) => {
