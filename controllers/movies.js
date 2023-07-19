@@ -17,16 +17,16 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  const { _id: filmId } = req.params;
+  const { movieId } = req.params;
 
-  Movie.findById(filmId)
+  Movie.findOne({ movieId })
     .orFail(new DocumentNotFoundError('Запрошиваемый фильм не найден'))
     .then((movie) => {
       if (!movie.owner.equals(req.user._id)) {
         return Promise.reject(new ForbiddenError('Недостаточно прав'));
       }
 
-      return Movie.findByIdAndDelete(filmId);
+      return Movie.findByIdAndDelete(movie._id);
     })
     .then(() => res.send({ message: 'Фильм успешно удален' }))
     .catch(next);

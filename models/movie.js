@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+const isRelativeUrl = (string) => {
+  const regex = /^\/\S+$/i;
+  return regex.test(string);
+};
+
 const movieSchema = new mongoose.Schema(
   {
     country: {
@@ -28,7 +33,7 @@ const movieSchema = new mongoose.Schema(
       require: true,
       validate: {
         validator(value) {
-          return validator.isURL(value);
+          return isRelativeUrl(value);
         },
       },
     },
@@ -46,7 +51,7 @@ const movieSchema = new mongoose.Schema(
       require: true,
       validate: {
         validator(value) {
-          return validator.isURL(value);
+          return isRelativeUrl(value);
         },
       },
     },

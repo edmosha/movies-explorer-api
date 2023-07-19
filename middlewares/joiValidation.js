@@ -1,6 +1,7 @@
 const { celebrate, Joi } = require('celebrate');
 
 const urlPattern = /^https?:\/\/\S+$/i;
+const relativeUrlPattern = /^\/\S+$/i;
 
 // auth
 const validateSignup = celebrate({
@@ -29,14 +30,14 @@ const validateUsersMe = celebrate({
 // movies
 const validateCreateMovie = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(30),
+    country: Joi.string().required().min(2).max(200),
     director: Joi.string().required().min(2).max(50),
     duration: Joi.number().required().positive(),
     year: Joi.string().required().min(4).max(30),
-    description: Joi.string().required().min(2).max(1000),
-    image: Joi.string().required().pattern(urlPattern),
+    description: Joi.string().required().min(2).max(2000),
+    image: Joi.string().required().pattern(relativeUrlPattern),
     trailerLink: Joi.string().required().pattern(urlPattern),
-    thumbnail: Joi.string().required().pattern(urlPattern),
+    thumbnail: Joi.string().required().pattern(relativeUrlPattern),
     movieId: Joi.number().required().positive(),
     nameRU: Joi.string().required().min(2).max(100),
     nameEN: Joi.string().required().min(2).max(100),
@@ -45,7 +46,7 @@ const validateCreateMovie = celebrate({
 
 const validateDeleteMovie = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().hex().required().length(24),
+    movieId: Joi.string().required(),
   }),
 });
 
